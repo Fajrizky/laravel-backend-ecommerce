@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Jetstream\Rules\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     Route::get('/products', [ProductController::class, 'all']);
     Route::get('/categories', [ProductCategoryController::class, 'all']);
-    Route::post('/register', [UserController::class, 'register']);
+
+    Route::prefix('/auth')->group(function (){
+        Route::post('/register', [UserController::class, 'register']);
+        Route::post('/login', [UserController::class, 'login']);
+    });
 });
